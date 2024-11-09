@@ -1,10 +1,10 @@
-import React from "react";
 import { Paper } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { SaveTestCaseResponse } from "../../shared/definitions/test-case.definitions";
+import React from "react";
+import type { SaveTestCaseResponse } from "../../shared/definitions/test-case.definitions";
 import usePostMessage from "../hooks/post-message.hook";
 
-export default function SaveTestCases() {
+export default function SaveTestCases(): JSX.Element {
   const postMessage = usePostMessage({ command: "save-test-cases" });
   const saveTestCasesResponse = postMessage.data as SaveTestCaseResponse[];
 

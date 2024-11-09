@@ -1,7 +1,7 @@
 import * as path from "path";
 import * as vscode from "vscode";
 
-const getWebviewHtml = (command: Message["command"], panel: vscode.WebviewPanel, extensionPath: string) => {
+const getWebviewHtml = (command: Message["command"], panel: vscode.WebviewPanel, extensionPath: string): string => {
   const bundleUri = vscode.Uri.file(path.join(extensionPath, "dist", "webview/index.js"));
   const bundlePath = panel.webview.asWebviewUri(bundleUri);
 

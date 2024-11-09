@@ -1,4 +1,4 @@
-const getHeaders = (username?: string, password?: string) => {
+const getHeaders = (username?: string, password?: string): { "Authorization": string; "Content-Type": string } => {
   const encodedCredentials = btoa(`${username}:${password}`);
 
   return {
@@ -7,7 +7,7 @@ const getHeaders = (username?: string, password?: string) => {
   };
 };
 
-const getBaseUrl = (organizationUrl?: string) => {
+const getBaseUrl = (organizationUrl?: string): string => {
   return `${organizationUrl}/api/v2/`;
 };
 

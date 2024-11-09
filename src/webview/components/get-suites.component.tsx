@@ -1,10 +1,10 @@
-import React from "react";
 import { Paper } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { Suite } from "../../shared/definitions/suite.definitions";
+import React from "react";
+import type { Suite } from "../../shared/definitions/suite.definitions";
 import usePostMessage from "../hooks/post-message.hook";
 
-export default function GetSuites() {
+export default function GetSuites(): JSX.Element {
   const postMessage = usePostMessage({ command: "get-suites" });
   const suites = postMessage.data as Suite[];
 

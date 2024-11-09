@@ -1,7 +1,7 @@
 declare global {
   interface Message {
     command?: "delete-test-cases" | "get-suites" | "get-test-cases" | "save-test-cases";
-    data?: any;
+    data?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   }
 
   interface PostMessageEvent extends MessageEvent {

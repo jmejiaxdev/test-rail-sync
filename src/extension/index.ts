@@ -6,10 +6,10 @@ import SaveTestCasesCommand from "./commands/save-test-cases.command";
 
 const commands = [GetSuitesCommand, GetTestCasesCommand, SaveTestCasesCommand, DeleteTestCasesCommand];
 
-export function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext): void {
   commands.forEach((command) => {
     context.subscriptions.push(vscode.commands.registerCommand(command.command, command.callback(context)));
   });
 }
 
-export function deactivate() {}
+export function deactivate(): void {}

@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { SaveTestCaseResponse, TestCase, TestCaseDescription } from "../../shared/definitions/test-case.definitions";
+import type { SaveTestCaseResponse, TestCase, TestCaseDescription } from "../../shared/definitions/test-case.definitions";
 
 const extractTestCasesDescriptions = (fileContent: string): TestCaseDescription[] => {
   console.log("Extracting test cases descriptions...");

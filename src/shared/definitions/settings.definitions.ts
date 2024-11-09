@@ -1,4 +1,4 @@
-import { TestCase } from "./test-case.definitions";
+import type { TestCase } from "./test-case.definitions";
 
 export type ProjectSettings = {
   api_key?: string;

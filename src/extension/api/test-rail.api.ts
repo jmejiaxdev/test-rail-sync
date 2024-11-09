@@ -1,7 +1,7 @@
 import axios from "axios";
-import { ProjectSettings } from "../../shared/definitions/settings.definitions";
-import { Suite } from "../../shared/definitions/suite.definitions";
-import { TestCase } from "../../shared/definitions/test-case.definitions";
+import type { ProjectSettings } from "../../shared/definitions/settings.definitions";
+import type { Suite } from "../../shared/definitions/suite.definitions";
+import type { TestCase } from "../../shared/definitions/test-case.definitions";
 import HttpUtils from "../utils/http.utils";
 
 const addTestCase = async (projectSettings: ProjectSettings, testCase: TestCase): Promise<TestCase> => {

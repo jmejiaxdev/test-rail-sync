@@ -4,7 +4,7 @@
 **/.vscode-test.*
 **/*.map
 **/*.ts
-**/eslint.config.mjs
+**/eslint.eslintrc.js
 **/tsconfig.json
 dist/**
 node_modules/**

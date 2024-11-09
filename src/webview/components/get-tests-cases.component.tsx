@@ -1,10 +1,10 @@
-import React from "react";
 import { Paper } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { TestCase } from "../../shared/definitions/test-case.definitions";
+import React from "react";
+import type { TestCase } from "../../shared/definitions/test-case.definitions";
 import usePostMessage from "../hooks/post-message.hook";
 
-export default function GetTestCases() {
+export default function GetTestCases(): JSX.Element {
   const postMessage = usePostMessage({ command: "get-test-cases" });
   const testCases = postMessage.data as TestCase[];
 

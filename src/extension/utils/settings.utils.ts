@@ -1,4 +1,4 @@
-import { ProjectSettings, Settings, TestCasesSettings } from "../../shared/definitions/settings.definitions";
+import type { ProjectSettings, Settings, TestCasesSettings } from "../../shared/definitions/settings.definitions";
 import FileUtils from "../utils/file.utils";
 
 const isProjectSettings = (projectSettings: ProjectSettings): projectSettings is ProjectSettings => {
@@ -67,6 +67,7 @@ const isTestsCasesSettings = (testCasesSettings: TestCasesSettings): testCasesSe
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isSettings = (settings: any): settings is Settings => {
   const isSettings = typeof settings === "object" && settings !== null;
   if (!isSettings) console.error("Settings is not an object");

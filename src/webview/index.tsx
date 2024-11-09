@@ -6,7 +6,7 @@ import GetSuites from "./components/get-suites.component";
 import GetTestCases from "./components/get-tests-cases.component";
 import SaveTestCases from "./components/save-tests-cases.component";
 
-export default function App() {
+export default function App(): JSX.Element {
   const darkTheme = createTheme({ palette: { mode: "dark" } });
   console.log("App -> command", window.command);
 

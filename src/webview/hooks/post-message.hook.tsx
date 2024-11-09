@@ -12,7 +12,7 @@ export default function usePostMessage(props: Props): Message {
   useEffect(() => {
     if (!command) return;
 
-    const listener = (event: any) => {
+    const listener = (event: PostMessageEvent) => {
       console.log("usePostMessage -> event", event);
       setState({ ...state, ...event.data });
     };
@@ -20,7 +20,7 @@ export default function usePostMessage(props: Props): Message {
     window.vscode.postMessage({ command });
     window.addEventListener("message", listener);
     return () => window.removeEventListener("message", listener);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return state;
 }
