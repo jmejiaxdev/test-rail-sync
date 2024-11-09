@@ -11,7 +11,55 @@
   ],
   "activationEvents": [],
   "main": "./dist/extension/index.js",
-  "contributes": {},
+  "contributes": {
+    "commands": [
+      {
+        "command": "get-suites",
+        "title": "Get suites"
+      },
+      {
+        "command": "get-test-cases",
+        "title": "Get test cases"
+      },
+      {
+        "command": "save-test-cases",
+        "title": "Save test cases"
+      },
+      {
+        "command": "delete-test-cases",
+        "title": "Delete test cases"
+      }
+    ],
+    "submenus": [
+      {
+        "id": "submenu",
+        "label": "TestRail Sync"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "group": "test-rail-sync",
+          "submenu": "submenu",
+          "when": "editorLangId == typescript"
+        }
+      ],
+      "submenu": [
+        {
+          "command": "get-suites"
+        },
+        {
+          "command": "get-test-cases"
+        },
+        {
+          "command": "save-test-cases"
+        },
+        {
+          "command": "delete-test-cases"
+        }
+      ]
+    }
+  },
   "scripts": {
     "vscode:prepublish": "npm run package",
     "compile": "rm -rf dist && webpack",

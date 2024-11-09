@@ -1,0 +1,20 @@
+{
+  "project": {
+    "api_key": "api_key",
+    "organization_url": "https://example.testrail.com/index.php?",
+    "project_id": 0,
+    "suite_id": 0,
+    "username": "user@example.com"
+  },
+  "test_cases": {
+    "custom_automation_tool_type": 0,
+    "custom_manual_automated": 0,
+    "custom_manual_vs_automated": 0,
+    "custom_test_level": 0,
+    "refs": "refs",
+    "priority_id": 0,
+    "section_id": 0,
+    "template": 0,
+    "type_id": 0
+  }
+}
