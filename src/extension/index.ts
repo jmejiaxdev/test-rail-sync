@@ -7,6 +7,7 @@ import SaveTestCasesCommand from "./commands/save-test-cases.command";
 const commands = [GetSuitesCommand, GetTestCasesCommand, SaveTestCasesCommand, DeleteTestCasesCommand];
 
 export function activate(context: vscode.ExtensionContext): void {
+  console.log("TestRail extension is now active!");
   commands.forEach((command) => {
     context.subscriptions.push(vscode.commands.registerCommand(command.command, command.callback(context)));
   });

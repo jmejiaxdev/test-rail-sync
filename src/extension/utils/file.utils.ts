@@ -12,7 +12,7 @@ const extractTestCasesDescriptions = (fileContent: string): TestCaseDescription[
   while ((match = descriptionRegex.exec(fileContent)) !== null) {
     const id = match[1];
     const title = match[2].trim();
-    descriptions.push({ id, title });
+    descriptions.push({ id: parseInt(id), title });
   }
 
   return descriptions;
@@ -43,7 +43,7 @@ const saveFileContent = (filePath: string, content: string): void => {
   fs.writeFileSync(filePath, content, "utf8");
 };
 
-const updateTestFileContent = (testFilePath: string, testFileContent: string, testCases: SaveTestCaseResponse[]): string => {
+const updateTestFileContent = (testFilePath: string, testFileContent: string, testCases: SaveTestCaseResponse[]): void => {
   const toNewContent = (content: string, testCase: TestCase) =>
     content.replace(testCase?.title || "", `${testCase.id}: ${testCase.title}`);
   const newTestFileContent = testCases.filter((testCase) => testCase.isNew).reduce(toNewContent, testFileContent);

@@ -1,39 +1,36 @@
 import * as vscode from "vscode";
 import TestRailService from "../services/test-rail.service";
+import ErrorUtils from "../utils/error.utils";
 import SettingsUtils from "../utils/settings.utils";
 import WebviewUtils from "../utils/webview.utils";
 
 // As defined in the package.json file contributes.commands section
 const command: Message["command"] = "get-suites";
 
-const callback =
-  (context: vscode.ExtensionContext): Function =>
-  (uri: vscode.Uri): void => {
-    console.log("GetSuitesCommand");
-    const panel = vscode.window.createWebviewPanel(command, "Get suites", vscode.ViewColumn.One, { enableScripts: true });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const callback = (context: vscode.ExtensionContext): any => {
+  console.log(command);
 
-    panel.webview.html = WebviewUtils.getWebviewHtml(command, panel, context.extensionPath);
+  return (uri: vscode.Uri): void => {
+    const panel = WebviewUtils.createWebviewPanel(context, command, "Get suites");
 
-    panel.webview.onDidReceiveMessage(async (message: Message) => {
-      console.log("GetSuitesCommand -> message", message);
-
+    const handleReceiveMessage = async (message: Message) => {
       try {
-        if (message.command !== command) return;
-
         const settings = SettingsUtils.getSettings(uri.fsPath);
         if (!settings) {
-          return vscode.window.showInformationMessage(
-            "'project' settings required. Visit https://google.com to learn how to create your settings file.",
-          );
+          throw ErrorUtils.createSettingsError("'project' settings required");
         }
 
         const response = await TestRailService.getSuites(settings.project);
         panel.webview.postMessage({ ...message, data: response });
       } catch (error) {
-        console.error("GetSuitesCommand -> error", error);
+        // vscode.window.showErrorMessage(JSON.stringify(error));
       }
-    });
+    };
+
+    panel.webview.onDidReceiveMessage(handleReceiveMessage);
   };
+};
 
 const GetSuitesCommand = { command, callback };
 

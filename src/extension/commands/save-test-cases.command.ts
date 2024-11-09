@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import TestRailService from "../services/test-rail.service";
+import ErrorUtils from "../utils/error.utils";
 import FileUtils from "../utils/file.utils";
 import SettingsUtils from "../utils/settings.utils";
 import WebviewUtils from "../utils/webview.utils";
@@ -7,39 +8,35 @@ import WebviewUtils from "../utils/webview.utils";
 // As defined in the package.json file contributes.commands section
 const command: Message["command"] = "save-test-cases";
 
-const callback =
-  (context: vscode.ExtensionContext): Function =>
-  (uri: vscode.Uri): void => {
-    console.log("SaveTestCases");
-    const panel = vscode.window.createWebviewPanel(command, "Save test cases", vscode.ViewColumn.One, {
-      enableScripts: true,
-    });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const callback = (context: vscode.ExtensionContext): any => {
+  console.log(command);
 
-    panel.webview.html = WebviewUtils.getWebviewHtml(command, panel, context.extensionPath);
+  return (uri: vscode.Uri): void => {
+    const panel = WebviewUtils.createWebviewPanel(context, command, "Save test cases");
 
-    panel.webview.onDidReceiveMessage(async (message: Message) => {
-      console.log("SaveTestCases -> message", message);
-
+    const handleReceiveMessage = async (message: Message) => {
       try {
-        if (message.command !== command) return;
-
         const settings = SettingsUtils.getSettings(uri.fsPath);
+
         if (!settings) {
-          return vscode.window.showInformationMessage(
-            "'project' and 'test_cases' settings required. Visit https://google.com to learn how to create your settings file.",
-          );
+          throw ErrorUtils.createSettingsError("'project' and 'test_cases' settings required");
         }
 
         const testFileContent = FileUtils.getFileContent(uri.fsPath);
         const descriptions = FileUtils.extractTestCasesDescriptions(testFileContent);
         const testCases = await TestRailService.saveTestCases(settings, descriptions);
-        FileUtils.updateTestFileContent(uri.fsPath, testFileContent, testCases);
         panel.webview.postMessage({ ...message, data: testCases });
+
+        FileUtils.updateTestFileContent(uri.fsPath, testFileContent, testCases);
       } catch (error) {
-        console.error("SaveTestCases -> error", error);
+        // vscode.window.showErrorMessage(JSON.stringify(error));
       }
-    });
+    };
+
+    panel.webview.onDidReceiveMessage(handleReceiveMessage);
   };
+};
 
 const GetTestCasesCommand = { command, callback };
 

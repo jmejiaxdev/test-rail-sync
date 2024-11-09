@@ -1,5 +1,5 @@
-import type { Suite } from "mocha";
 import type { ProjectSettings, Settings } from "../../shared/definitions/settings.definitions";
+import type { Suite } from "../../shared/definitions/suite.definitions";
 import type { SaveTestCaseResponse, TestCase, TestCaseDescription } from "../../shared/definitions/test-case.definitions";
 import TestRailApi from "../api/test-rail.api";
 // import { SaveTestCases, TestCase, TestCaseDescription } from "../definitions/test-case.definitions";
@@ -18,7 +18,7 @@ import TestRailApi from "../api/test-rail.api";
 //   return testCaseDescritions.length;
 // };
 
-const getSuites = async (projectSettings: ProjectSettings): Promise<Suite> => {
+const getSuites = async (projectSettings: ProjectSettings): Promise<Suite[]> => {
   console.log("Getting suites from TestRail...");
   return await TestRailApi.getSuites(projectSettings);
 };

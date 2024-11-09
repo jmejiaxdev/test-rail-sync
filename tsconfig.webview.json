@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ES6",
+    "allowSyntheticDefaultImports": true,
     "jsx": "react",
-    "outDir": "./dist/webview",
     "lib": ["DOM", "ES6"],
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "outDir": "./dist/webview",
     "sourceMap": true,
     "strict": true,
-    "moduleResolution": "node",
-    "types": ["node"],
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true // Add this line
+    "target": "ES6",
+    "types": ["node"]
   },
   "include": ["src/shared/**/*", "src/webview/**/*"]
 }

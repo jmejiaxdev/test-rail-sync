@@ -1,11 +1,14 @@
 import * as path from "path";
 import * as vscode from "vscode";
 
-const getWebviewHtml = (command: Message["command"], panel: vscode.WebviewPanel, extensionPath: string): string => {
-  const bundleUri = vscode.Uri.file(path.join(extensionPath, "dist", "webview/index.js"));
-  const bundlePath = panel.webview.asWebviewUri(bundleUri);
+const createWebviewPanel = (context: vscode.ExtensionContext, command: string, title: string): vscode.WebviewPanel => {
+  const panel = vscode.window.createWebviewPanel(command, title, vscode.ViewColumn.One, {
+    enableScripts: true,
+  });
 
-  return `
+  const bundleUri = vscode.Uri.file(path.join(context.extensionPath, "dist", "webview/index.js"));
+  const bundlePath = panel.webview.asWebviewUri(bundleUri);
+  panel.webview.html = `
       <!DOCTYPE html>
       <html lang="en">
       <head>
@@ -23,10 +26,12 @@ const getWebviewHtml = (command: Message["command"], panel: vscode.WebviewPanel,
       </body>
       </html>
     `;
+
+  return panel;
 };
 
 const WebviewUtils = {
-  getWebviewHtml,
+  createWebviewPanel,
 };
 
 export default WebviewUtils;
