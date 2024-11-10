@@ -5,7 +5,7 @@ export type Project = {
   api_key?: string;
   organization_url?: string;
   project_id?: number;
-  suite_id?: number;
+  suite_id?: number; // AKA 'group_by'
   test_case?: TestCase;
   title?: string;
   username?: string;

@@ -1,19 +1,24 @@
-const getHeaders = (username?: string, password?: string): { "Authorization": string; "Content-Type": string } => {
-  const encodedCredentials = btoa(`${username}:${password}`);
+import type { AxiosInstance } from "axios";
+import axios from "axios";
+import type { ProjectSettings } from "../../shared/definitions/settings.definitions";
 
-  return {
-    "Authorization": `Basic ${encodedCredentials}`,
-    "Content-Type": "application/json",
-  };
-};
+let api: AxiosInstance;
 
-const getBaseUrl = (organizationUrl?: string): string => {
-  return `${organizationUrl}/api/v2/`;
+const getApiClient = (projectSettings: ProjectSettings): AxiosInstance => {
+  const { api_key = "", organization_url, username = "" } = projectSettings;
+
+  return (
+    api ||
+    axios.create({
+      baseURL: `${organization_url}/api/v2/`,
+      auth: { username, password: api_key },
+      headers: { "Content-Type": "application/json" },
+    })
+  );
 };
 
 const HttpUtils = {
-  getHeaders,
-  getBaseUrl,
+  getApiClient,
 };
 
 export default HttpUtils;

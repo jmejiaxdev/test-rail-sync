@@ -16,19 +16,39 @@
     "commands": [
       {
         "command": "get-suites",
-        "title": "Get suites"
+        "title": "1. Get all suites"
+      },
+      {
+        "command": "get-test-case",
+        "title": "2. Get test case"
       },
       {
         "command": "get-test-cases",
-        "title": "Get test cases"
+        "title": "3. Get all test cases"
       },
       {
-        "command": "save-test-cases",
-        "title": "Save test cases"
+        "command": "add-test-case",
+        "title": "4. Add new test case"
+      },
+      {
+        "command": "add-test-cases",
+        "title": "5. Add all new test cases"
+      },
+      {
+        "command": "update-test-case",
+        "title": "6. Update current test cases"
+      },
+      {
+        "command": "update-test-cases",
+        "title": "7. Update all current test cases"
+      },
+      {
+        "command": "delete-test-case",
+        "title": "8. Delete test case"
       },
       {
         "command": "delete-test-cases",
-        "title": "Delete test cases"
+        "title": "9. Delete all test cases"
       }
     ],
     "submenus": [
@@ -47,16 +67,40 @@
       ],
       "submenu": [
         {
-          "command": "get-suites"
+          "command": "get-suites",
+          "group": "1_submenu"
         },
         {
-          "command": "get-test-cases"
+          "command": "get-test-case",
+          "group": "1_submenu"
         },
         {
-          "command": "save-test-cases"
+          "command": "get-test-cases",
+          "group": "1_submenu"
         },
         {
-          "command": "delete-test-cases"
+          "command": "add-test-case",
+          "group": "2_submenu"
+        },
+        {
+          "command": "add-test-cases",
+          "group": "2_submenu"
+        },
+        {
+          "command": "update-test-case",
+          "group": "3_submenu"
+        },
+        {
+          "command": "update-test-cases",
+          "group": "3_submenu"
+        },
+        {
+          "command": "delete-test-case",
+          "group": "4_submenu"
+        },
+        {
+          "command": "delete-test-cases",
+          "group": "4_submenu"
         }
       ]
     }

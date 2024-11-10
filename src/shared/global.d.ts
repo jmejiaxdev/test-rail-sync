@@ -1,6 +1,16 @@
 declare global {
   interface Message {
-    command?: "delete-test-cases" | "get-suites" | "get-test-cases" | "save-test-cases";
+    // As defined in the package.json file contributes.commands section
+    command?:
+      | "add-test-case"
+      | "add-test-cases"
+      | "delete-test-case"
+      | "delete-test-cases"
+      | "get-suites"
+      | "get-test-case"
+      | "get-test-cases"
+      | "update-test-case"
+      | "update-test-cases";
     data?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   }
 

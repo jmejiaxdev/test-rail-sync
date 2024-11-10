@@ -1,7 +1,7 @@
 .DS_Store
 .env
-.vscode-test
+.testrailsync.config.json
 dist
 node_modules
-resources
 out
+resources

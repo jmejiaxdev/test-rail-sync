@@ -51,6 +51,7 @@ export default [
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/no-unused-vars": ["error", { ignoreRestSiblings: true }],
       "@typescript-eslint/no-use-before-define": ["error", { classes: false, functions: false }],
+      // "curly": ["error", "all"],
       "import/order": [
         "error",
         {
@@ -84,7 +85,7 @@ export default [
       "security/detect-object-injection": "off",
       "unused-imports/no-unused-imports": "error",
       "require-await": "error",
-      "react/no-unknown-property": ["error", { ignore: ["css"] }],
+      // "react/no-unknown-property": ["error", { ignore: ["css"] }],
     },
     settings: {
       "import/extensions": [".ts", ".tsx"],

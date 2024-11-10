@@ -1,20 +1,15 @@
 import { useEffect, useState } from "react";
 
 type Props = { command: Message["command"] };
-type State = Message;
+type State = { isLoading?: boolean } & Message;
 
-export default function usePostMessage(props: Props): Message {
-  console.log("usePostMessage -> props", props);
+export default function usePostMessage(props: Props): State {
   const { command } = props;
-
-  const [state, setState] = useState<State>({});
+  const [state, setState] = useState<State>({ isLoading: true });
 
   useEffect(() => {
-    if (!command) return;
-
     const listener = (event: PostMessageEvent) => {
-      console.log("usePostMessage -> event", event);
-      setState({ ...state, ...event.data });
+      setState({ ...state, ...event.data, isLoading: false });
     };
 
     window.vscode.postMessage({ command });

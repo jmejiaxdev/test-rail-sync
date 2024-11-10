@@ -1,9 +1,8 @@
 import * as fs from "fs";
 import * as path from "path";
-import type { SaveTestCaseResponse, TestCase, TestCaseDescription } from "../../shared/definitions/test-case.definitions";
+import type { TestCaseDescription } from "../../shared/definitions/test-case.definitions";
 
 const extractTestCasesDescriptions = (fileContent: string): TestCaseDescription[] => {
-  console.log("Extracting test cases descriptions...");
   let match;
 
   const descriptionRegex = /test\(['"`](\d+)?\s*:?\s*(.*)['"`],/g;
@@ -43,19 +42,11 @@ const saveFileContent = (filePath: string, content: string): void => {
   fs.writeFileSync(filePath, content, "utf8");
 };
 
-const updateTestFileContent = (testFilePath: string, testFileContent: string, testCases: SaveTestCaseResponse[]): void => {
-  const toNewContent = (content: string, testCase: TestCase) =>
-    content.replace(testCase?.title || "", `${testCase.id}: ${testCase.title}`);
-  const newTestFileContent = testCases.filter((testCase) => testCase.isNew).reduce(toNewContent, testFileContent);
-  saveFileContent(testFilePath, newTestFileContent);
-};
-
 const FileUtils = {
   extractTestCasesDescriptions,
   getFileContent,
   getSettingsFilePath,
   saveFileContent,
-  updateTestFileContent,
 };
 
 export default FileUtils;

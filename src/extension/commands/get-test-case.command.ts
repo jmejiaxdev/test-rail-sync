@@ -4,14 +4,14 @@ import CommandUtils from "../utils/command.utils";
 import ErrorUtils from "../utils/error.utils";
 import SettingsUtils from "../utils/settings.utils";
 
-const command: Message["command"] = "get-suites";
+const command: Message["command"] = "get-test-case";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const callback = (context: ExtensionContext): any => {
   console.log(command);
 
   return (uri: Uri): void => {
-    const panel = CommandUtils.createWebviewPanel(context, command, "Get suites");
+    const panel = CommandUtils.createWebviewPanel(context, command, "Get test cases");
 
     const handleReceiveMessage = async (message: Message) => {
       try {
@@ -20,7 +20,7 @@ const callback = (context: ExtensionContext): any => {
           throw ErrorUtils.createSettingsError();
         }
 
-        const response = await TestRailService.getSuites(settings.project);
+        const response = await TestRailService.getTestsCases(settings);
         panel.webview.postMessage({ ...message, data: response });
       } catch (error) {
         ErrorUtils.showCommandError(error);
@@ -31,6 +31,6 @@ const callback = (context: ExtensionContext): any => {
   };
 };
 
-const GetSuitesCommand = { command, callback };
+const GetTestCaseCommand = { command, callback };
 
-export default GetSuitesCommand;
+export default GetTestCaseCommand;

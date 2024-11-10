@@ -56,5 +56,3 @@ export type TestCase = {
 };
 
 export type TestCaseDescription = Pick<TestCase, "id" | "title">;
-
-export type SaveTestCaseResponse = TestCase & { isNew?: boolean };

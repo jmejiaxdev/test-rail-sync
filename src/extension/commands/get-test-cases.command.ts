@@ -1,30 +1,29 @@
-import * as vscode from "vscode";
+import type { ExtensionContext, Uri } from "vscode";
 import TestRailService from "../services/test-rail.service";
+import CommandUtils from "../utils/command.utils";
 import ErrorUtils from "../utils/error.utils";
 import SettingsUtils from "../utils/settings.utils";
-import WebviewUtils from "../utils/webview.utils";
 
-// As defined in the package.json file contributes.commands section
 const command: Message["command"] = "get-test-cases";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const callback = (context: vscode.ExtensionContext): any => {
+const callback = (context: ExtensionContext): any => {
   console.log(command);
 
-  return (uri: vscode.Uri): void => {
-    const panel = WebviewUtils.createWebviewPanel(context, command, "Get test cases");
+  return (uri: Uri): void => {
+    const panel = CommandUtils.createWebviewPanel(context, command, "Get test cases");
 
     const handleReceiveMessage = async (message: Message) => {
       try {
         const settings = SettingsUtils.getSettings(uri.fsPath);
         if (!settings) {
-          throw ErrorUtils.createSettingsError("'project' and 'test_cases.settings' required");
+          throw ErrorUtils.createSettingsError();
         }
 
         const response = await TestRailService.getTestsCases(settings);
         panel.webview.postMessage({ ...message, data: response });
       } catch (error) {
-        // vscode.window.showErrorMessage(JSON.stringify(error));
+        ErrorUtils.showCommandError(error);
       }
     };
 
