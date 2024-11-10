@@ -1,12 +1,13 @@
 import type { ExtensionContext, Uri } from "vscode";
 import { window } from "vscode";
+import type { Command, Message } from "../../shared/definitions/command.definitions";
 import TestRailService from "../services/test-rail.service";
 import CommandUtils from "../utils/command.utils";
 import ErrorUtils from "../utils/error.utils";
 import FileUtils from "../utils/file.utils";
 import SettingsUtils from "../utils/settings.utils";
 
-const command: Message["command"] = "update-test-cases";
+const command: Command = "update-test-cases";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const callback = (context: ExtensionContext): any => {

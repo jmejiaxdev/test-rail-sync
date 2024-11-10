@@ -1,7 +1,6 @@
 import * as path from "path";
 import type { ExtensionContext, WebviewPanel, TextEditor } from "vscode";
 import { Uri, ViewColumn, window } from "vscode";
-// import { Range, Uri, ViewColumn, window } from "vscode";
 
 const createWebviewPanel = (context: ExtensionContext, command: string, title: string): WebviewPanel => {
   const panel = window.createWebviewPanel(command, title, ViewColumn.One, {
@@ -37,17 +36,9 @@ const getEditorLine = (editor: TextEditor): string => {
   return editor.document.lineAt(lineNumber).text;
 };
 
-// const saveContent = (editor: TextEditor, fileContent: string, newContent: string): void => {
-//   editor?.edit((editBuilder) => {
-//     const entireRange = new Range(editor.document.positionAt(0), editor.document.positionAt(fileContent.length));
-//     editBuilder.replace(entireRange, newContent);
-//   });
-// };
-
 const CommandUtils = {
   createWebviewPanel,
   getEditorLine,
-  // saveContent,
 };
 
 export default CommandUtils;

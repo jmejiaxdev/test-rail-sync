@@ -2,10 +2,11 @@ import { Paper } from "@mui/material";
 import type { DataGridProps } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
 import React from "react";
+import type { Command } from "../../shared/definitions/command.definitions";
 import usePostMessage from "../hooks/post-message.hook";
 import Empty from "./empty.component";
 
-type Props = { command: Message["command"] } & DataGridProps;
+type Props = { command: Command } & DataGridProps;
 
 const defaultPageSize = 25;
 

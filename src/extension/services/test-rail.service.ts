@@ -41,6 +41,10 @@ const getSuites = async (projectSettings: ProjectSettings): Promise<Suite[]> => 
   return await TestRailApi.getSuites(projectSettings);
 };
 
+const getTestCase = async (settings: Settings, id: TestCase["id"]): Promise<TestCase> => {
+  return await TestRailApi.getTestCase(settings.project, id);
+};
+
 const getTestsCases = async (settings: Settings): Promise<TestCase[]> => {
   return await TestRailApi.getTestCases(settings.project, settings.test_cases.section_id);
 };
@@ -67,6 +71,7 @@ const TestRailService = {
   deleteTestCase,
   deleteTestCases,
   getSuites,
+  getTestCase,
   getTestsCases,
   updateTestCase,
   updateTestCases,

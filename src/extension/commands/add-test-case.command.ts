@@ -1,26 +1,26 @@
 import type { ExtensionContext, Uri } from "vscode";
 import { window } from "vscode";
+import type { Command, Message } from "../../shared/definitions/command.definitions";
 import TestRailService from "../services/test-rail.service";
 import CommandUtils from "../utils/command.utils";
 import ErrorUtils from "../utils/error.utils";
 import FileUtils from "../utils/file.utils";
 import SettingsUtils from "../utils/settings.utils";
 
-const command: Message["command"] = "add-test-case";
+const command: Command = "add-test-case";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const callback = (context: ExtensionContext): any => {
   console.log(command);
 
-  const editor = window.activeTextEditor;
-
-  if (!editor) {
-    throw new Error("VS Code editor not found");
-  }
-
-  const line = CommandUtils.getEditorLine(editor);
-
   return (uri: Uri): void => {
+    const editor = window.activeTextEditor;
+
+    if (!editor) {
+      throw new Error("VS Code editor not found");
+    }
+
+    const line = CommandUtils.getEditorLine(editor);
     const panel = CommandUtils.createWebviewPanel(context, command, "Add new test case");
 
     const handleReceiveMessage = async (message: Message): Promise<void> => {

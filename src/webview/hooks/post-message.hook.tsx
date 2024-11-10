@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import type { Command, Message } from "../../shared/definitions/command.definitions";
 
-type Props = { command: Message["command"] };
+type Props = { command: Command };
 type State = { isLoading?: boolean } & Message;
 
 export default function usePostMessage(props: Props): State {

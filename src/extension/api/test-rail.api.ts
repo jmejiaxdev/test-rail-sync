@@ -21,18 +21,18 @@ const getSuites = async (projectSettings: ProjectSettings): Promise<Suite[]> => 
   return response.data as Suite[];
 };
 
+const getTestCase = async (projectSettings: ProjectSettings, id: TestCase["id"]): Promise<TestCase> => {
+  const apiClient = HttpUtils.getApiClient(projectSettings);
+  const response = await apiClient.get(`get_case/${id}`);
+  return response.data as TestCase;
+};
+
 const getTestCases = async (projectSettings: ProjectSettings, sectionId: TestCase["section_id"]): Promise<TestCase[]> => {
   const apiClient = HttpUtils.getApiClient(projectSettings);
   const response = await apiClient.get(
     `get_cases/${projectSettings.project_id}&suite_id=${projectSettings.suite_id}&section_id=${sectionId}`,
   );
   return response.data.cases as TestCase[];
-};
-
-const getTestCase = async (projectSettings: ProjectSettings, id: TestCase["id"]): Promise<TestCase> => {
-  const apiClient = HttpUtils.getApiClient(projectSettings);
-  const response = await apiClient.get(`get_test/${id}`);
-  return response.data as TestCase;
 };
 
 const updateTestCase = async (projectSettings: ProjectSettings, testCase: TestCase): Promise<TestCase> => {
@@ -45,8 +45,8 @@ const TestRailApi = {
   addTestCase,
   deleteTestCase,
   getSuites,
-  getTestCases,
   getTestCase,
+  getTestCases,
   updateTestCase,
 };
 

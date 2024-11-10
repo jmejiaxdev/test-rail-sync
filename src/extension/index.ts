@@ -1,6 +1,6 @@
 import type { ExtensionContext } from "vscode";
 import { commands } from "vscode";
-import type { Command } from "../shared/definitions/command.definitions";
+import type { RegisterCommand } from "../shared/definitions/command.definitions";
 import AddTestCaseCommand from "./commands/add-test-case.command";
 import AddTestCasesCommand from "./commands/add-test-cases.command";
 import DeleteTestCaseCommand from "./commands/delete-test-case.command";
@@ -11,7 +11,7 @@ import GetTestCasesCommand from "./commands/get-test-cases.command";
 import UpadateTestCaseCommand from "./commands/update-test-case.command";
 import UpadateTestCasesCommand from "./commands/update-test-cases.command";
 
-const Commands: Command[] = [
+const Commands: RegisterCommand[] = [
   AddTestCaseCommand,
   AddTestCasesCommand,
   DeleteTestCaseCommand,
