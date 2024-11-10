@@ -27,26 +27,22 @@ const testCasesColumns = [
 export default function App(): JSX.Element {
   const darkTheme = createTheme({ palette: { mode: "dark" } });
 
+  const { command } = window;
+
   const renderView = () => {
-    switch (window.command) {
-      case "add-test-case":
-        return <Data command="add-test-case" />;
-      case "add-test-cases":
-        return <DataTable columns={testCasesColumns} command="add-test-cases" />;
-      case "delete-test-case":
-        return <Data command="delete-test-case" />;
-      case "delete-test-cases":
-        return <DataTable columns={testCasesColumns} command="delete-test-cases" />;
+    switch (command) {
       case "get-suites":
-        return <DataTable columns={suitesColumns} command="get-suites" />;
-      case "get-test-cases":
-        return <DataTable columns={testCasesColumns} command="get-test-cases" />;
+        return <DataTable columns={suitesColumns} command={command} />;
+      case "add-test-case":
+      case "delete-test-case":
       case "get-test-case":
-        return <Data command="get-test-case" />;
       case "update-test-case":
-        return <Data command="update-test-case" />;
+        return <Data command={command} />;
+      case "add-test-cases":
+      case "delete-test-cases":
+      case "get-test-cases":
       case "update-test-cases":
-        return <DataTable columns={testCasesColumns} command="update-test-cases" />;
+        return <DataTable columns={testCasesColumns} command={command} />;
       default:
         return null;
     }

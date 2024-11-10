@@ -6,15 +6,17 @@ import usePostMessage from "../hooks/post-message.hook";
 import Empty from "./empty.component";
 
 type Props = { command: Message["command"] } & DataGridProps;
-const detailsColumn = { field: "id", headerName: "Details", flex: 1 };
+
 const defaultPageSize = 25;
 
 export default function DataTable(props: Props): JSX.Element {
-  const { columns, command, ...rest } = props;
-  const postMessage = usePostMessage({ command });
+  console.log("DataTable", props);
 
-  const rowsCount = postMessage?.data?.length || 0;
-  if (!rowsCount) {
+  const { command } = props;
+  const { data, isLoading } = usePostMessage({ command });
+
+  const rowsCount = data?.length || 0;
+  if (!isLoading && !rowsCount) {
     return <Empty />;
   }
 
@@ -23,11 +25,10 @@ export default function DataTable(props: Props): JSX.Element {
   return (
     <Paper sx={{ height: "100%", width: "100%" }}>
       <DataGrid
-        columns={[...columns, detailsColumn]}
-        loading={postMessage?.isLoading}
+        loading={isLoading}
         paginationModel={{ page: 0, pageSize }}
         pageSizeOptions={[5, 10, 25, 50]}
-        rows={postMessage.data}
+        rows={data}
         slotProps={{
           loadingOverlay: {
             variant: "linear-progress",
@@ -35,7 +36,7 @@ export default function DataTable(props: Props): JSX.Element {
           },
         }}
         sx={{ border: 0 }}
-        {...rest}
+        {...props}
       />
     </Paper>
   );

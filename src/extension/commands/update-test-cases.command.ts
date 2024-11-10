@@ -6,13 +6,15 @@ import ErrorUtils from "../utils/error.utils";
 import FileUtils from "../utils/file.utils";
 import SettingsUtils from "../utils/settings.utils";
 
-const command: Message["command"] = "add-test-case";
+const command: Message["command"] = "update-test-cases";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const callback = (context: ExtensionContext): any => {
-  const panel = CommandUtils.createWebviewPanel(context, command, "Update test case");
+  console.log(command);
 
   return (uri: Uri): void => {
+    const panel = CommandUtils.createWebviewPanel(context, command, "Update test case");
+
     const handleReceiveMessage = async (message: Message): Promise<void> => {
       try {
         const settings = SettingsUtils.getSettings(uri.fsPath);

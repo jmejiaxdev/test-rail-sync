@@ -164,7 +164,7 @@ const getSettings = (filePath: string): Settings | null => {
   const settingsOverride = getSettingsOverride(filePath);
   if (settingsOverride) {
     settings.project = { ...settings.project, ...settingsOverride.project };
-    settings.testCases = { ...settings.testCases, ...settingsOverride.testCases };
+    settings.test_cases = { ...settings.test_cases, ...settingsOverride.test_cases };
   }
 
   return settings;

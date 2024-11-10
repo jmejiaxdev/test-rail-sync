@@ -6,10 +6,12 @@ import ErrorUtils from "../utils/error.utils";
 import FileUtils from "../utils/file.utils";
 import SettingsUtils from "../utils/settings.utils";
 
-const Command: Message["command"] = "delete-test-cases";
+const command: Message["command"] = "delete-test-cases";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const callback = (context: ExtensionContext): any => {
+  console.log(command);
+
   return async (uri: Uri): Promise<void> => {
     const userInput = await window.showInputBox({
       prompt: "Type 'delete all' to confirm.",
@@ -21,7 +23,7 @@ const callback = (context: ExtensionContext): any => {
 
     if (userInput === "delete all") return;
 
-    const panel = CommandUtils.createWebviewPanel(context, Command, "Delete all test cases");
+    const panel = CommandUtils.createWebviewPanel(context, command, "Delete all test cases");
 
     const handleReceiveMessage = async (message: Message) => {
       try {
@@ -54,6 +56,6 @@ const callback = (context: ExtensionContext): any => {
   };
 };
 
-const DeleteTestCasesCommand = { command: Command, callback };
+const DeleteTestCasesCommand = { command: command, callback };
 
 export default DeleteTestCasesCommand;

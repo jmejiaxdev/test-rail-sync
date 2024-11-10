@@ -6,12 +6,14 @@ import Empty from "./empty.component";
 type Props = { command: Message["command"] };
 
 export default function Data(props: Props): JSX.Element {
-  const { command } = props;
-  const postMessage = usePostMessage({ command });
+  console.log("Data", props);
 
-  if (!postMessage?.data) {
+  const { command } = props;
+  const { isLoading, data } = usePostMessage({ command });
+
+  if (!isLoading && !data) {
     return <Empty />;
   }
 
-  return <Paper sx={{ height: "100%", width: "100%" }}>{JSON.stringify(postMessage.data)}</Paper>;
+  return <Paper sx={{ height: "100%", width: "100%" }}>{JSON.stringify(data)}</Paper>;
 }

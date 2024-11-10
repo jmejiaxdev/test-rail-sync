@@ -10,6 +10,8 @@ const command: Message["command"] = "add-test-cases";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const callback = (context: ExtensionContext): any => {
+  console.log(command);
+
   return (uri: Uri): void => {
     const panel = CommandUtils.createWebviewPanel(context, command, "Add all new test cases");
 

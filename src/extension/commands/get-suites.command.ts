@@ -16,18 +16,22 @@ const callback = (context: ExtensionContext): any => {
     const handleReceiveMessage = async (message: Message) => {
       try {
         const settings = SettingsUtils.getSettings(uri.fsPath);
+
         if (!settings) {
           throw ErrorUtils.createSettingsError();
         }
 
-        const response = await TestRailService.getSuites(settings.project);
-        panel.webview.postMessage({ ...message, data: response });
+        const suites = await TestRailService.getSuites(settings.project);
+        panel.webview.postMessage({ ...message, data: suites });
       } catch (error) {
         ErrorUtils.showCommandError(error);
       }
+
+      console.log(`${command} handleReceiveMessage`);
     };
 
     panel.webview.onDidReceiveMessage(handleReceiveMessage);
+    console.log(`${command} callback`);
   };
 };
 

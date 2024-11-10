@@ -10,6 +10,8 @@ const command: Message["command"] = "add-test-case";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const callback = (context: ExtensionContext): any => {
+  console.log(command);
+
   const editor = window.activeTextEditor;
 
   if (!editor) {
