@@ -130,9 +130,7 @@ const getSettingsOverride = (fileContent: string): Settings | null => {
   const regex = /\/\*\*\s*TestRail Sync settings\s*([\s\S]*?)\*\//;
 
   const match = fileContent.match(regex);
-  if (!match || !match[1]) {
-    return null;
-  }
+  if (!match || !match[1]) return null;
 
   const jsonString = match[1]
     .split("\n")

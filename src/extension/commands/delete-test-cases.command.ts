@@ -17,11 +17,8 @@ const callback = (context: ExtensionContext): any => {
     const userInput = await window.showInputBox({
       prompt: "Type 'delete all' to confirm.",
       // placeHolder: "Type 'delete all' to proceed",
-      validateInput: (text) => {
-        return text === "delete all" ? null : "Please type 'delete all' to confirm";
-      },
+      validateInput: (text) => (text === "delete all" ? null : "Please type 'delete all' to confirm"),
     });
-
     if (userInput === "delete all") return;
 
     const panel = CommandUtils.createWebviewPanel(context, command, "Delete all test cases");
@@ -29,9 +26,7 @@ const callback = (context: ExtensionContext): any => {
     const handleReceiveMessage = async (message: Message) => {
       try {
         const settings = SettingsUtils.getSettings(uri.fsPath);
-        if (!settings) {
-          throw ErrorUtils.createSettingsError();
-        }
+        if (!settings) throw ErrorUtils.createSettingsError();
 
         const fileContent = FileUtils.getFileContent(uri.fsPath);
         const descriptions = FileUtils.extractTestCasesDescriptions(fileContent);
@@ -42,9 +37,7 @@ const callback = (context: ExtensionContext): any => {
         panel.webview.postMessage({ ...message, data: testCases });
 
         // Update file content
-        testCases.forEach((testCase) =>
-          fileContent.replace(`${testCase.id}: ${testCase.description}`, testCase.title || ""),
-        );
+        testCases.forEach((testCase) => fileContent.replace(`${testCase.id}: ${testCase.title}`, `${testCase.title}`));
         FileUtils.saveFileContent(uri.fsPath, fileContent);
 
         window.showInformationMessage("Test cases deleted!");

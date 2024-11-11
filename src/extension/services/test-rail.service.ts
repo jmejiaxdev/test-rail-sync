@@ -19,9 +19,8 @@ const addTestCases = async (settings: Settings, descriptions: TestCaseDescriptio
   return testCases;
 };
 
-const deleteTestCase = async (projectSettings: ProjectSettings, id: TestCase["id"]): Promise<TestCase> => {
-  return await TestRailApi.deleteTestCase(projectSettings, id);
-};
+const deleteTestCase = async (projectSettings: ProjectSettings, id: TestCase["id"]): Promise<TestCase> =>
+  await TestRailApi.deleteTestCase(projectSettings, id);
 
 const deleteTestCases = async (
   projectSettings: ProjectSettings,
@@ -37,17 +36,13 @@ const deleteTestCases = async (
   return testCases;
 };
 
-const getSuites = async (projectSettings: ProjectSettings): Promise<Suite[]> => {
-  return await TestRailApi.getSuites(projectSettings);
-};
+const getSuites = async (projectSettings: ProjectSettings): Promise<Suite[]> => await TestRailApi.getSuites(projectSettings);
 
-const getTestCase = async (settings: Settings, id: TestCase["id"]): Promise<TestCase> => {
-  return await TestRailApi.getTestCase(settings.project, id);
-};
+const getTestCase = async (settings: Settings, id: TestCase["id"]): Promise<TestCase> =>
+  await TestRailApi.getTestCase(settings.project, id);
 
-const getTestsCases = async (settings: Settings): Promise<TestCase[]> => {
-  return await TestRailApi.getTestCases(settings.project, settings.test_cases.section_id);
-};
+const getTestsCases = async (settings: Settings): Promise<TestCase[]> =>
+  await TestRailApi.getTestCases(settings.project, settings.test_cases.section_id);
 
 const updateTestCase = async (settings: Settings, description: TestCaseDescription): Promise<TestCase> => {
   const testCase = { ...settings.test_cases, ...description };

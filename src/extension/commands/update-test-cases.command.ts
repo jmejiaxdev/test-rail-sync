@@ -19,17 +19,13 @@ const callback = (context: ExtensionContext): any => {
     const handleReceiveMessage = async (message: Message): Promise<void> => {
       try {
         const settings = SettingsUtils.getSettings(uri.fsPath);
-        if (!settings) {
-          throw ErrorUtils.createSettingsError();
-        }
+        if (!settings) throw ErrorUtils.createSettingsError();
 
         const fileContent = FileUtils.getFileContent(uri.fsPath);
         const descriptions = FileUtils.extractTestCasesDescriptions(fileContent);
-        const updateDescriptions = descriptions.filter((description) => description.id);
 
-        if (!updateDescriptions.length) {
-          throw new Error("Cannot find test cases to update");
-        }
+        const updateDescriptions = descriptions.filter((description) => description.id);
+        if (!updateDescriptions.length) throw new Error("Cannot find test cases to update");
 
         // Save in TestRail
         const testCases = await TestRailService.updateTestCases(settings, updateDescriptions);

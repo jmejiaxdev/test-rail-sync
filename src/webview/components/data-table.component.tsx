@@ -6,6 +6,7 @@ import type { Command } from "../../shared/definitions/command.definitions";
 import usePostMessage from "../hooks/post-message.hook";
 import Empty from "./empty.component";
 
+// TODO: Need to resolve enums
 type Props = { command: Command } & DataGridProps;
 
 const defaultPageSize = 25;
@@ -17,9 +18,7 @@ export default function DataTable(props: Props): JSX.Element {
   const { data, isLoading } = usePostMessage({ command });
 
   const rowsCount = data?.length || 0;
-  if (!isLoading && !rowsCount) {
-    return <Empty />;
-  }
+  if (!isLoading && !rowsCount) return <Empty />;
 
   const pageSize = rowsCount > defaultPageSize ? Math.ceil(rowsCount / defaultPageSize) : defaultPageSize;
 

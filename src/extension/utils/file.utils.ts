@@ -34,13 +34,9 @@ const getSettingsFilePath = (startPath: string): string | null => {
   return null;
 };
 
-const getFileContent = (filePath: string): string => {
-  return fs.readFileSync(filePath, "utf8");
-};
+const getFileContent = (filePath: string): string => fs.readFileSync(filePath, "utf8");
 
-const saveFileContent = (filePath: string, content: string): void => {
-  fs.writeFileSync(filePath, content, "utf8");
-};
+const saveFileContent = (filePath: string, content: string): void => fs.writeFileSync(filePath, content, "utf8");
 
 const FileUtils = {
   extractTestCasesDescriptions,

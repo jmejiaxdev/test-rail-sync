@@ -11,10 +11,13 @@ export type Command =
   | "update-test-case"
   | "update-test-cases";
 
-export interface Message {
-  // As defined in the package.json file contributes.commands section
-  command?: Command;
+export type Message = {
+  command?: Command; // As defined in the package.json file contributes.commands section
   data?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+};
+
+export interface PostMessageEvent extends MessageEvent {
+  data: Message;
 }
 
 export type RegisterCommand = {

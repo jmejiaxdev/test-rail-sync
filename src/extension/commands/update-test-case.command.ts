@@ -15,10 +15,7 @@ const callback = (context: ExtensionContext): any => {
 
   return (uri: Uri): void => {
     const editor = window.activeTextEditor;
-
-    if (!editor) {
-      throw new Error("VS Code editor not found");
-    }
+    if (!editor) throw new Error("VS Code editor not found");
 
     const line = CommandUtils.getEditorLine(editor);
     const panel = CommandUtils.createWebviewPanel(context, command, "Update test case");
@@ -26,18 +23,10 @@ const callback = (context: ExtensionContext): any => {
     const handleReceiveMessage = async (message: Message): Promise<void> => {
       try {
         const settings = SettingsUtils.getSettings(uri.fsPath);
-        if (!settings) {
-          throw ErrorUtils.createSettingsError();
-        }
+        if (!settings) throw ErrorUtils.createSettingsError();
 
         const description = FileUtils.extractTestCasesDescriptions(line).pop();
-        if (!description || !description.title) {
-          throw new Error("Test case title not found");
-        }
-
-        if (description.id) {
-          throw new Error("Cannot update test case without an ID");
-        }
+        if (!description || !description.title || description.id) throw new Error("Test case title not found");
 
         // Save in TestRail
         const testCase = await TestRailService.updateTestCase(settings, description);

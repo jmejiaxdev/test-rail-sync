@@ -11,8 +11,8 @@ const getApiClient = (projectSettings: ProjectSettings): AxiosInstance => {
     api ||
     axios.create({
       baseURL: `${organization_url}/api/v2/`,
-      auth: { username, password: api_key },
       headers: { "Content-Type": "application/json" },
+      auth: { username, password: api_key },
     })
   );
 };

@@ -3,10 +3,6 @@ export {};
 import type { Command, Message } from "./definitions/command.definitions";
 
 declare global {
-  interface PostMessageEvent extends MessageEvent {
-    data: Message;
-  }
-
   interface Window {
     command: Command;
     vscode: {

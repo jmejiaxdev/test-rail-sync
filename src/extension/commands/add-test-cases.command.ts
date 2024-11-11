@@ -19,24 +19,20 @@ const callback = (context: ExtensionContext): any => {
     const handleReceiveMessage = async (message: Message) => {
       try {
         const settings = SettingsUtils.getSettings(uri.fsPath);
-        if (!settings) {
-          throw ErrorUtils.createSettingsError();
-        }
+        if (!settings) throw ErrorUtils.createSettingsError();
 
         const fileContent = FileUtils.getFileContent(uri.fsPath);
         const descriptions = FileUtils.extractTestCasesDescriptions(fileContent);
-        const addDescriptions = descriptions.filter((description) => !description.id);
 
-        if (!addDescriptions.length) {
-          throw new Error("Cannot find test cases to add");
-        }
+        const addDescriptions = descriptions.filter((description) => !description.id);
+        if (!addDescriptions.length) throw new Error("Cannot find test cases to add");
 
         // Save in TestRail
         const testCases = await TestRailService.addTestCases(settings, addDescriptions);
         panel.webview.postMessage({ ...message, data: testCases });
 
         // Update file content
-        testCases.forEach((testCase) => fileContent.replace(testCase.title || "", `${testCase.id}: ${testCase.title}`));
+        testCases.forEach((testCase) => fileContent.replace(`${testCase.title}`, `${testCase.id}: ${testCase.title}`));
         FileUtils.saveFileContent(uri.fsPath, fileContent);
 
         window.showInformationMessage("Test cases added!");

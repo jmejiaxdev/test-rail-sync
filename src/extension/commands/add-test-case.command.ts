@@ -15,10 +15,7 @@ const callback = (context: ExtensionContext): any => {
 
   return (uri: Uri): void => {
     const editor = window.activeTextEditor;
-
-    if (!editor) {
-      throw new Error("VS Code editor not found");
-    }
+    if (!editor) throw new Error("VS Code editor not found");
 
     const line = CommandUtils.getEditorLine(editor);
     const panel = CommandUtils.createWebviewPanel(context, command, "Add new test case");
@@ -26,18 +23,10 @@ const callback = (context: ExtensionContext): any => {
     const handleReceiveMessage = async (message: Message): Promise<void> => {
       try {
         const settings = SettingsUtils.getSettings(uri.fsPath);
-        if (!settings) {
-          throw ErrorUtils.createSettingsError();
-        }
+        if (!settings) throw ErrorUtils.createSettingsError();
 
         const description = FileUtils.extractTestCasesDescriptions(line).pop();
-        if (!description || !description.title) {
-          throw new Error("Test case title not found");
-        }
-
-        if (description.id) {
-          throw new Error("Cannot add test case with an ID");
-        }
+        if (!description || !description.title || description.id) throw new Error("Test case title not found");
 
         // Save in TestRail
         const testCase = await TestRailService.addTestCase(settings, description);
@@ -45,7 +34,7 @@ const callback = (context: ExtensionContext): any => {
 
         // Update file content
         const fileContent = FileUtils.getFileContent(uri.fsPath);
-        fileContent.replace(testCase.title || "", `${testCase.id}: ${testCase.title}`);
+        fileContent.replace(`${testCase.title}`, `${testCase.id}: ${testCase.title}`);
         FileUtils.saveFileContent(uri.fsPath, fileContent);
 
         window.showInformationMessage("Test case added!");
