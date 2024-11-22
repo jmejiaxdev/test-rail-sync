@@ -2,8 +2,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import React from "react";
 import { createRoot } from "react-dom/client";
-import DataTable from "./components/data-table.component";
-import Data from "./components/data.component";
+import { DataTable, Data } from "./components";
 
 const suitesColumns = [
   { field: "id", headerName: "ID", flex: 1 },
@@ -33,12 +32,12 @@ export default function App(): JSX.Element {
     switch (command) {
       case "get-suites":
         return <DataTable columns={suitesColumns} command={command} />;
-      case "add-test-case":
+      case "create-test-case":
       case "delete-test-case":
       case "get-test-case":
       case "update-test-case":
         return <Data command={command} />;
-      case "add-test-cases":
+      case "create-test-cases":
       case "delete-test-cases":
       case "get-test-cases":
       case "update-test-cases":

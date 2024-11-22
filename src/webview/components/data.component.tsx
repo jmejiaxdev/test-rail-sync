@@ -1,7 +1,7 @@
 import { Paper } from "@mui/material";
 import React from "react";
 import type { Command } from "../../shared/definitions/command.definitions";
-import usePostMessage from "../hooks/post-message.hook";
+import { usePostMessage } from "../hooks";
 import Empty from "./empty.component";
 
 // TODO: Need to resolve enums

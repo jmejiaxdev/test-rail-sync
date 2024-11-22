@@ -1,13 +1,17 @@
 import type { ExtensionContext, Uri } from "vscode";
 import { window } from "vscode";
-import type { Command, Message } from "../../shared/definitions/command.definitions";
-import TestRailService from "../services/test-rail.service";
-import CommandUtils from "../utils/command.utils";
-import ErrorUtils from "../utils/error.utils";
-import FileUtils from "../utils/file.utils";
-import SettingsUtils from "../utils/settings.utils";
-
-const command: Command = "delete-test-cases";
+import { TestRailService } from "../services";
+import {
+  createWebviewPanel,
+  getSettings,
+  getFile,
+  createSettingsError,
+  getDescriptions,
+  removeIdsFromTestFile,
+  showCommandError,
+} from "../utils";
+// FIXME
+const command = "delete-test-cases";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const callback = (context: ExtensionContext): any => {
@@ -19,30 +23,26 @@ const callback = (context: ExtensionContext): any => {
       // placeHolder: "Type 'delete all' to proceed",
       validateInput: (text) => (text === "delete all" ? null : "Please type 'delete all' to confirm"),
     });
-    if (userInput === "delete all") return;
+    if (userInput !== "delete all") return;
 
-    const panel = CommandUtils.createWebviewPanel(context, command, "Delete all test cases");
+    const panel = createWebviewPanel(context, command, "Delete all test cases");
 
-    const handleReceiveMessage = async (message: Message) => {
+    const handleReceiveMessage = async () => {
       try {
-        const settings = SettingsUtils.getSettings(uri.fsPath);
-        if (!settings) throw ErrorUtils.createSettingsError();
+        const settings = getSettings(uri.fsPath);
+        if (!settings) throw createSettingsError();
 
-        const fileContent = FileUtils.getFileContent(uri.fsPath);
-        const descriptions = FileUtils.extractTestCasesDescriptions(fileContent);
+        const fileContent = getFile(uri.fsPath);
+        const descriptions = getDescriptions(fileContent);
         const deleteDescriptions = descriptions.filter((description) => description.id);
 
-        // Delete in TestRail
-        const testCases = await TestRailService.deleteTestCases(settings.project, deleteDescriptions);
-        panel.webview.postMessage({ ...message, data: testCases });
-
-        // Update file content
-        testCases.forEach((testCase) => fileContent.replace(`${testCase.id}: ${testCase.title}`, `${testCase.title}`));
-        FileUtils.saveFileContent(uri.fsPath, fileContent);
+        await TestRailService.deleteTestCases(settings.project, deleteDescriptions);
+        // panel.webview.postMessage({ ...message, data: testCases });
+        removeIdsFromTestFile(uri.fsPath, deleteDescriptions);
 
         window.showInformationMessage("Test cases deleted!");
       } catch (error) {
-        ErrorUtils.showCommandError(error);
+        showCommandError(error);
       }
     };
 
@@ -50,6 +50,6 @@ const callback = (context: ExtensionContext): any => {
   };
 };
 
-const DeleteTestCasesCommand = { command: command, callback };
+const DeleteTestCase = { command, callback };
 
-export default DeleteTestCasesCommand;
+export default DeleteTestCase;

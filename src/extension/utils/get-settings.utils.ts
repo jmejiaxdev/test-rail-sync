@@ -1,5 +1,6 @@
 import type { ProjectSettings, Settings, TestCasesSettings } from "../../shared/definitions/settings.definitions";
-import FileUtils from "../utils/file.utils";
+import getFileContent from "./get-file.utils";
+import getSettingsFilePath from "./get-settings-file-path.utils";
 
 const isProjectSettings = (projectSettings: ProjectSettings): projectSettings is ProjectSettings => {
   const isProjectSettings = typeof projectSettings === "object" && projectSettings !== null;
@@ -140,14 +141,14 @@ const getSettingsOverride = (fileContent: string): Settings | null => {
   return JSON.parse(jsonString) as Settings;
 };
 
-const getSettings = (filePath: string): Settings | null => {
-  const settingsFilePath = FileUtils.getSettingsFilePath(filePath);
+export default function getSettings(filePath: string): Settings | null {
+  const settingsFilePath = getSettingsFilePath(filePath);
   if (!settingsFilePath) {
     console.error("Settings file path not found at", filePath);
     return null;
   }
 
-  const settingsFileContent = settingsFilePath && FileUtils.getFileContent(settingsFilePath);
+  const settingsFileContent = settingsFilePath && getFileContent(settingsFilePath);
   if (!settingsFilePath) {
     console.error("Settings file empty", filePath);
     return null;
@@ -166,10 +167,4 @@ const getSettings = (filePath: string): Settings | null => {
   }
 
   return settings;
-};
-
-const SettingsUtils = {
-  getSettings,
-};
-
-export default SettingsUtils;
+}

@@ -61,9 +61,16 @@ export default [
       ],
       "import/namespace": [2, { allowComputed: true }],
       "import/newline-after-import": ["error", { count: 1 }],
-      "import/no-duplicates": ["error", { considerQueryString: true }],
       "import/no-cycle": "error",
-      "import/no-unresolved": ["error", { ignore: ["vscode"] }],
+      "import/no-duplicates": ["error", { considerQueryString: true }],
+      "import/no-useless-path-segments": [
+        "error",
+        {
+          noUselessIndex: true, // Enforce using 'index' files
+          commonjs: true, // Allows CommonJS-like simplifications
+        },
+      ],
+      "import/no-unresolved": ["error", { ignore: ["vscode", "^@?\\w"] }],
       "max-classes-per-file": "off",
       "no-debugger": "warn",
       "no-nested-ternary": ["error"],

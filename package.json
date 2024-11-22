@@ -27,20 +27,20 @@
         "title": "3. Get all test cases"
       },
       {
-        "command": "add-test-case",
-        "title": "4. Add new test case"
+        "command": "create-test-case",
+        "title": "4. Create new test case"
       },
       {
-        "command": "add-test-cases",
-        "title": "5. Add all new test cases"
+        "command": "create-test-cases",
+        "title": "5. Create all new test cases"
       },
       {
         "command": "update-test-case",
-        "title": "6. Update current test cases"
+        "title": "6. Update test case"
       },
       {
         "command": "update-test-cases",
-        "title": "7. Update all current test cases"
+        "title": "7. Update all test cases"
       },
       {
         "command": "delete-test-case",
@@ -79,11 +79,11 @@
           "group": "1_submenu"
         },
         {
-          "command": "add-test-case",
+          "command": "create-test-case",
           "group": "2_submenu"
         },
         {
-          "command": "add-test-cases",
+          "command": "create-test-cases",
           "group": "2_submenu"
         },
         {

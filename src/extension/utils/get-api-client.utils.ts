@@ -4,21 +4,16 @@ import type { ProjectSettings } from "../../shared/definitions/settings.definiti
 
 let api: AxiosInstance;
 
-const getApiClient = (projectSettings: ProjectSettings): AxiosInstance => {
+export default function getApiClient(projectSettings: ProjectSettings): AxiosInstance {
   const { api_key = "", organization_url, username = "" } = projectSettings;
 
-  return (
-    api ||
-    axios.create({
+  if (!api) {
+    api = axios.create({
       baseURL: `${organization_url}/api/v2/`,
       headers: { "Content-Type": "application/json" },
       auth: { username, password: api_key },
-    })
-  );
-};
+    });
+  }
 
-const HttpUtils = {
-  getApiClient,
-};
-
-export default HttpUtils;
+  return api;
+}

@@ -1,13 +1,16 @@
 import type { ExtensionContext, Uri } from "vscode";
 import { window } from "vscode";
-import type { Command, Message } from "../../shared/definitions/command.definitions";
-import TestRailService from "../services/test-rail.service";
-import CommandUtils from "../utils/command.utils";
-import ErrorUtils from "../utils/error.utils";
-import FileUtils from "../utils/file.utils";
-import SettingsUtils from "../utils/settings.utils";
+import { TestRailService } from "../services";
+import {
+  getEditorLine,
+  createWebviewPanel,
+  getSettings,
+  createSettingsError,
+  getDescriptions,
+  showCommandError,
+} from "../utils";
 
-const command: Command = "update-test-case";
+const command = "update-test-case";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const callback = (context: ExtensionContext): any => {
@@ -17,24 +20,23 @@ const callback = (context: ExtensionContext): any => {
     const editor = window.activeTextEditor;
     if (!editor) throw new Error("VS Code editor not found");
 
-    const line = CommandUtils.getEditorLine(editor);
-    const panel = CommandUtils.createWebviewPanel(context, command, "Update test case");
+    const line = getEditorLine(editor);
+    const panel = createWebviewPanel(context, command, "Update test case");
 
     const handleReceiveMessage = async (message: Message): Promise<void> => {
       try {
-        const settings = SettingsUtils.getSettings(uri.fsPath);
-        if (!settings) throw ErrorUtils.createSettingsError();
+        const settings = getSettings(uri.fsPath);
+        if (!settings) throw createSettingsError();
 
-        const description = FileUtils.extractTestCasesDescriptions(line).pop();
-        if (!description || !description.title || description.id) throw new Error("Test case title not found");
+        const description = getDescriptions(line).pop();
+        if (!description || !description.title || !description.id) throw new Error("Test case description not found");
 
-        // Save in TestRail
         const testCase = await TestRailService.updateTestCase(settings, description);
-        panel.webview.postMessage({ ...message, data: testCase });
+        panel.webview.postMessage({ ...message, data: [testCase] });
 
         window.showInformationMessage("Test case updated!");
       } catch (error) {
-        ErrorUtils.showCommandError(error);
+        showCommandError(error);
       }
     };
 
@@ -42,6 +44,6 @@ const callback = (context: ExtensionContext): any => {
   };
 };
 
-const AddTestCaseCommand = { command, callback };
+const UpdateTestCase = { command, callback };
 
-export default AddTestCaseCommand;
+export default UpdateTestCase;

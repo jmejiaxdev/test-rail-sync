@@ -12,5 +12,5 @@
     "target": "ES6",
     "types": ["node"]
   },
-  "include": ["src/shared/**/*", "src/webview/**/*"]
+  "include": ["src/shared/**/*", "src/webview/**/*", "global.d.ts"]
 }

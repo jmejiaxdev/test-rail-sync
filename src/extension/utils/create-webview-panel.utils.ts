@@ -1,8 +1,8 @@
 import * as path from "path";
-import type { ExtensionContext, WebviewPanel, TextEditor } from "vscode";
+import type { ExtensionContext, WebviewPanel } from "vscode";
 import { Uri, ViewColumn, window } from "vscode";
 
-const createWebviewPanel = (context: ExtensionContext, command: string, title: string): WebviewPanel => {
+export default function createWebviewPanel(context: ExtensionContext, command: string, title: string): WebviewPanel {
   const panel = window.createWebviewPanel(command, title, ViewColumn.One, {
     enableScripts: true,
   });
@@ -29,16 +29,4 @@ const createWebviewPanel = (context: ExtensionContext, command: string, title: s
     `;
 
   return panel;
-};
-
-const getEditorLine = (editor: TextEditor): string => {
-  const lineNumber = editor.selection.active.line;
-  return editor.document.lineAt(lineNumber).text;
-};
-
-const CommandUtils = {
-  createWebviewPanel,
-  getEditorLine,
-};
-
-export default CommandUtils;
+}

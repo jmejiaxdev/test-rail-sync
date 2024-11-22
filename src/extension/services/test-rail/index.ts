@@ -1,0 +1,9 @@
+export { default as createTestCase } from "./create-test-case.service";
+export { default as createTestCases } from "./create-test-cases.service";
+export { default as deleteTestCase } from "./delete-test-case.service";
+export { default as deleteTestCases } from "./delete-test-cases.service";
+export { default as getSuites } from "./get-suites.service";
+export { default as getTestCase } from "./get-test-case.service";
+export { default as getTestCases } from "./get-test-cases.service";
+export { default as updateTestCase } from "./update-test-case.service";
+export { default as updateTestCases } from "./update-test-cases.service";

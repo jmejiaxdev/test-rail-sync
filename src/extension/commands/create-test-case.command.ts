@@ -6,11 +6,12 @@ import {
   createWebviewPanel,
   getSettings,
   createSettingsError,
-  getDescriptions,
   showCommandError,
+  getDescriptions,
+  appendIdsToTestFile,
 } from "../utils";
 
-const command = "get-test-case";
+const command = "create-test-case";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const callback = (context: ExtensionContext): any => {
@@ -21,18 +22,21 @@ const callback = (context: ExtensionContext): any => {
     if (!editor) throw new Error("VS Code editor not found");
 
     const line = getEditorLine(editor);
-    const panel = createWebviewPanel(context, command, "Get test case");
+    const panel = createWebviewPanel(context, command, "Create new test case");
 
-    const handleReceiveMessage = async (message: Message) => {
+    const handleReceiveMessage = async (message: Message): Promise<void> => {
       try {
         const settings = getSettings(uri.fsPath);
         if (!settings) throw createSettingsError();
 
         const description = getDescriptions(line).pop();
-        if (!description || !description.title || !description.id) throw new Error("Test case description not found");
+        if (!description || !description.title || description.id) throw new Error("Test case description not found");
 
-        const testCase = await TestRailService.getTestCase(settings, description.id);
-        panel.webview.postMessage({ ...message, data: [testCase] });
+        const testCases = [await TestRailService.createTestCase(settings, description)]; // postMessage expects an array
+        panel.webview.postMessage({ ...message, data: testCases });
+        appendIdsToTestFile(uri.fsPath, testCases);
+
+        window.showInformationMessage("Test case added!");
       } catch (error) {
         showCommandError(error);
       }
@@ -42,6 +46,6 @@ const callback = (context: ExtensionContext): any => {
   };
 };
 
-const GetTestCase = { command, callback };
+const CreateTestCase = { command, callback };
 
-export default GetTestCase;
+export default CreateTestCase;
