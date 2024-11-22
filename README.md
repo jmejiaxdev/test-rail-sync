@@ -53,7 +53,7 @@ In the root directory of the project where the extension will be used, create a 
 - `suite_id`: number. A TestRail project typically consists of one or several suites, also referred to as group IDs. You can locate your suite ID in the URL when accessing a specific suite. For instance, if you navigate to https://acme.testrail.com/index.php?/suites/view/12345, your `suite_id` is `12345`.
 - `username`: string. Provides HTTP access for API interactions. For more details on how to access and utilize the TestRail API using your API key, please visit the official support documentation: [Username and API Key](https://support.testrail.com/hc/en-us/articles/7077039051284-Accessing-the-TestRail-API#h_01J53NS432TJFBGHMFVVVEHPKQ:~:text=Username%20and%20API%20Key).
 
-#### TestCases
+#### Test cases
 
 The extension currently supports synchronization of the following fields:
 

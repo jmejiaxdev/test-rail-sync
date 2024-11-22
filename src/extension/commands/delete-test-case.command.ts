@@ -7,7 +7,6 @@ import {
   getSettings,
   createSettingsError,
   getDescriptions,
-  appendIdsToTestFile,
   showCommandError,
   removeIdsFromTestFile,
 } from "../utils";
@@ -32,7 +31,7 @@ const callback = (context: ExtensionContext): any => {
     const line = getEditorLine(editor);
     const panel = createWebviewPanel(context, command, "Delete test case");
 
-    const handleReceiveMessage = async (message: Message) => {
+    const handleReceiveMessage = async () => {
       try {
         const settings = getSettings(uri.fsPath);
         if (!settings) throw createSettingsError();
